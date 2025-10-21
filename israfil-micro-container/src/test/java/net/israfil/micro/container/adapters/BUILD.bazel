@@ -1,0 +1,13 @@
+load("@rules_java//java:java_test.bzl", "java_test")
+
+java_test(
+    name = "AdaptersTest",
+    srcs = ["AdaptersTest.java"],
+    deps = [
+        "//israfil-micro-container",
+        "//israfil-micro-util",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+        "@maven//:org_microemu_cldcapi11",
+    ],
+)

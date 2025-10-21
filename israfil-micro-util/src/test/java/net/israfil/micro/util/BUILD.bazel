@@ -1,0 +1,23 @@
+load("@rules_java//java:java_test.bzl", "java_test")
+
+java_test(
+    name = "CausedRuntimeExceptionTest",
+    srcs = ["CausedRuntimeExceptionTest.java"],
+    deps = [
+        "//israfil-micro-util",
+        "@maven//:org_microemu_cldcapi11",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+    ],
+)
+
+java_test(
+    name = "StringBufferOutputStreamTest",
+    srcs = ["StringBufferOutputStreamTest.java"],
+    deps = [
+        "//israfil-micro-util",
+        "@maven//:org_microemu_cldcapi11",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+    ],
+)

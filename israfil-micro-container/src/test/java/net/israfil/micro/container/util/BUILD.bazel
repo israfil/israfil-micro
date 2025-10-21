@@ -1,0 +1,25 @@
+load("@rules_java//java:java_test.bzl", "java_test")
+
+java_test(
+    name = "NonDuplicateStackTest",
+    srcs = ["NonDuplicateStackTest.java"],
+    deps = [
+        "//israfil-micro-container",
+        "//israfil-micro-util",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+        "@maven//:org_microemu_cldcapi11",
+    ],
+)
+
+java_test(
+    name = "CyclicalDependencyDetectionTest",
+    srcs = ["CyclicalDependencyDetectionTest.java"],
+    deps = [
+        "//israfil-micro-container",
+        "//israfil-micro-util",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+        "@maven//:org_microemu_cldcapi11",
+    ],
+)

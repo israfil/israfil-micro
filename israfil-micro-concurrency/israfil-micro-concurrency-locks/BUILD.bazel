@@ -1,0 +1,9 @@
+load("@rules_java//java:java_library.bzl", "java_library")
+java_library(
+    name = "israfil-micro-concurrency-locks",
+    srcs = glob(["src/main/java/**/*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:org_microemu_cldcapi11",
+    ],
+)

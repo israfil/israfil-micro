@@ -1,0 +1,49 @@
+load("@rules_java//java:java_test.bzl", "java_test")
+
+java_test(
+    name = "CouldNotCreateComponentTest",
+    srcs = ["CouldNotCreateComponentTest.java"],
+    deps = [
+        "//israfil-micro-container",
+        "//israfil-micro-util",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+        "@maven//:org_microemu_cldcapi11",
+    ],
+)
+
+java_test(
+    name = "CyclicalDependencyErrorTest",
+    srcs = ["CyclicalDependencyErrorTest.java"],
+    deps = [
+        "//israfil-micro-container",
+        "//israfil-micro-util",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+        "@maven//:org_microemu_cldcapi11",
+    ],
+)
+
+java_test(
+    name = "UnsatisfiedDependencyErrorTest",
+    srcs = ["UnsatisfiedDependencyErrorTest.java"],
+    deps = [
+        "//israfil-micro-container",
+        "//israfil-micro-util",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+        "@maven//:org_microemu_cldcapi11",
+    ],
+)
+
+java_test(
+    name = "ComponentAlreadyRegisteredErrorTest",
+    srcs = ["ComponentAlreadyRegisteredErrorTest.java"],
+    deps = [
+        "//israfil-micro-container",
+        "//israfil-micro-util",
+        "@maven//:junit_junit",
+        "@maven//:com_google_truth_truth",
+        "@maven//:org_microemu_cldcapi11",
+    ],
+)

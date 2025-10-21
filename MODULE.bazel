@@ -1,0 +1,38 @@
+module(name = "israfil-micro")
+
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
+bazel_dep(name = "rules_java", version = "8.15.2")
+bazel_dep(name = "rules_kotlin", version = "2.1.9")
+bazel_dep(name = "rules_jvm_external", version = "6.8")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.artifact(
+    testonly = True,
+    artifact = "truth",
+    group = "com.google.truth",
+    version = "1.4.4",
+)
+maven.artifact(
+    testonly = True,
+    artifact = "junit",
+    exclusions = ["org.hamcrest:hamcrest-core"],
+    group = "junit",
+    version = "4.13.2",
+)
+maven.artifact(
+    artifact = "cldcapi11",
+    group = "org.microemu",
+    neverlink = True,
+    version = "2.0.4",
+)
+maven.install(
+    artifacts = [],
+    fetch_sources = True,
+    generate_compat_repositories = True,
+    repositories = [
+        # "m2local",
+        "https://maven.google.com",
+        "https://repo1.maven.org/maven2",
+    ],
+)
+use_repo(maven, "maven")  # Guava called out to support kotlin-grpc which doesn't use bzlmod

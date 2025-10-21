@@ -1,0 +1,5 @@
+alias(
+    name = "israfil-micro-concurrency-locks",
+    actual = "//israfil-micro-concurrency/israfil-micro-concurrency-locks",
+    visibility = ["//visibility:public"],
+)
