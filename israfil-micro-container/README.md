@@ -1,0 +1,41 @@
+# Israfil Micro-Container
+
+> Christian Edward Gruber
+>
+> May 2, 2007
+
+## Overview
+
+The micro-container is an extremely lightweight IoC container supporting
+dependency injection. It is built with the principles in mind that
+spawned [pico-container](http://www.picocontainer.org/) but with the
+explicit constraints to which J2ME applications centered around the
+CLDC 1.1 are bound. This includes a complete absence of any constructor
+or method lookup (reflection) or dynamic proxy support.
+
+Like pico-container, Israfil's micro-container only handles the
+registration and vending of components, not additional services such as
+persistence, and the like.
+
+## Isn't Micro bigger than Pico?
+
+Yes, but micro-container wasn't as taken, and israfil-micro is a placeholder
+for any further frameworks that might be developed in the J2ME footprint.
+I briefly considered femto-container, but it was too obscure even for me.
+
+## Can I use this in commercial or other software?
+
+Yes. The micro-container, as with all Israfil Micro and Foundation libraries
+are licensed under the terms of the BSD license, which provides you with a
+license to distribute with or without modification, and to prepare derivative
+works, with the sole exception that you retain the notice. The short answer
+is yes, go for it, it won't cost you a penny, and you won't be obliged to
+show anyone your code.
+
+## How do I use it?
+
+I recommend looking at pico-container's site for really good theoretical
+presentations of this kind of software. Tapestry5 also contains an ioc
+framework par-excellence, and it has some ok docs. Some specific usage
+documentation for this framework (around staging the container and getting
+things set up in a practical application) are available [here](USAGE.md).   
