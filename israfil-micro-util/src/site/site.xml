@@ -1,0 +1,18 @@
+<project>
+  <body>
+    <menu name="Parent">
+      <item name="${parent.name}" href="${parent.url}"/>   
+    </menu>
+	<menu name="Overview">
+      <item name="Overview" href="index.html"/>
+      <!-- <item name="Usage" href="usage.html"/> -->
+      <!-- <item name="FAQ" href="faq.html"/> -->
+    </menu>
+    <!--
+    <menu name="Examples">
+      <item name="Example1" href="examples/example1.html"/>   
+    </menu>
+    -->
+    ${reports}
+  </body>
+</project>

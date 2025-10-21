@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.israfil.micro</groupId>
+		<artifactId>israfil-micro-concurrency</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>israfil-micro-concurrency-locks</artifactId>
+	<name>Israfil CLDC 1.1 compliant locks</name>
+	<description>
+	This is a partial port of the backport-concurrency project, which is itself a partial
+	implementation of the JSR-166 concurrency packages in Java 1.5 and updated for 1.6.  It
+	is implemented against a Java 2 Micro Edition CLDC 1.1 profile, and is therefore quite
+	constrained.
+
+	The "locks" package implements only the locks portion of the backport classes, including
+	the Lock and ReadWriteLock interfaces, and the ReentrantLock and ReentrantReadWriteLock.
+
+	The locks package has no external dependencies not available to the CLDC 1.1 profile.
+	</description>
+    <licenses>
+        <license>
+            <name>Public Domain</name>
+            <distribution>repo</distribution>
+            <url>http://creativecommons.org/licenses/publicdomain</url>
+            <comments>Released to the public domain and certified according to Creative Commons certification practice.</comments>
+        </license>
+    </licenses>  
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<executions>
+					<execution><goals><goal>clean</goal></goals></execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+    <dependencies>
+       <dependency>
+           <groupId>javax.microedition</groupId>
+           <artifactId>cldc</artifactId>
+           <version>1.1</version>
+           <scope>provided</scope>
+       </dependency>
+    </dependencies>
+	<reporting>
+		<plugins>
+			<plugin>
+			    <artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>jxr-maven-plugin</artifactId>
+			</plugin>      
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>surefire-report-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>jdepend-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+			    <artifactId>maven-checkstyle-plugin</artifactId>
+			</plugin>
+			<!-- 
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>dashboard-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>findbugs-maven-plugin</artifactId>
+				<configuration>
+					<xmlOutput>false</xmlOutput>
+					<threshold>High|Normal|Low|Exp|Ignore</threshold>
+					<effort>Min|Default|Max</effort>
+					<excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
+					<includeFilterFile>findbugs-include.xml</includeFilterFile>
+					<visitors>FindDeadLocalStores,UnreadFields</visitors>
+					<omitVisitors>FindDeadLocalStores,UnreadFields</omitVisitors>
+					<pluginList>/libs/fb-contrib/fb-contrib-2.8.0.jar</pluginList>
+				</configuration>
+			</plugin>
+	      	-->   
+		</plugins>
+	</reporting>
+</project>

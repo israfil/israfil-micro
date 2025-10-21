@@ -1,0 +1,139 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.israfil.micro</groupId>
+	<artifactId>israfil-micro</artifactId>
+	<version>3-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Israfil Micro: Parent</name>
+	<description>J2ME Frameworks from Israfil Consulting Services</description>
+	<inceptionYear>2008</inceptionYear>
+	<url>http://www.israfil.net/projects/micro</url>
+	<modules>
+		<module>israfil-micro-collections</module>
+		<module>israfil-micro-container</module>
+		<module>israfil-micro-concurrency</module>
+		<module>israfil-micro-util</module>
+	</modules>
+	<licenses>
+		<license>
+			<name>BSD</name>
+			<distribution>repo</distribution>
+			<url>http://www.israfil.net/israfil-license-bsd.txt</url>
+			<comments>A simple open-source license with minimal restrictions</comments>
+		</license>
+	</licenses>  
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<tagBase>https://israfil-micro.googlecode.com/svn/tags/RELEASE</tagBase>
+				</configuration>
+			</plugin>	
+		</plugins>
+	</build>
+	<issueManagement>
+		<system>Google Code Issue Tracking</system>
+		<url>http://code.google.com/p/israfil-micro/issues/list</url>
+	</issueManagement>
+	<ciManagement>
+	   <system>continuum</system>
+	   <url>http://ci.israfil.net/continuum</url>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<sendOnError>true</sendOnError>
+				<sendOnFailure>true</sendOnFailure>
+				<sendOnSuccess>false</sendOnSuccess>
+				<sendOnWarning>false</sendOnWarning>
+				<address>cgruber@israfil.net</address>
+			</notifier>
+		</notifiers>
+	</ciManagement>
+	<mailingLists>
+		<mailingList>
+			<name>Israfil Micro User List</name>
+			<subscribe>http://groups.google.com/group/israfil-micro-users/subscribe</subscribe>
+			<post>israfil-micro-users@googlegroups.com</post>
+			<archive>http://groups.google.com/group/israfil-micro-users/topics</archive>
+		</mailingList>
+		<mailingList>
+			<name>Israfil Micro Developer List</name>
+			<subscribe>http://groups.google.com/group/israfil-micro-dev/subscribe</subscribe>
+			<post>israfil-micro-dev@googlegroups.com</post>
+			<archive>http://groups.google.com/group/israfil-micro-dev/topics</archive>
+		</mailingList>
+		<mailingList>
+			<name>Israfil Micro Issues Tracker Notifications</name>
+			<subscribe>http://groups.google.com/group/israfil-micro-issues/subscribe</subscribe>
+			<archive>http://groups.google.com/group/israfil-micro-issues/topics</archive>
+		</mailingList>
+		<mailingList>
+			<name>Israfil Micro Source Control Notifications</name>
+			<subscribe>http://groups.google.com/group/israfil-micro-svn/subscribe</subscribe>
+			<archive>http://groups.google.com/group/israfil-micro-svn/topics</archive>
+		</mailingList>
+	</mailingLists>
+	<developers>
+	   <developer>
+	       <id>christianedwardgruber</id>
+	       <name>Christian Edward Gruber</name>
+	       <organization>Israfil Consulting Services Corporation</organization>
+	       <organizationUrl>http://www.israfil.net</organizationUrl>
+	       <email>christianedwardgruber@gmail.com</email>
+	       <roles>
+               		<role>admin</role>
+               		<role>architect</role>
+              		<role>developer</role>
+	       </roles>
+	       <timezone>EST-5EDT</timezone>
+	       <properties>
+	           <yahoo-IM>christianedwardgruber</yahoo-IM>
+	       </properties>
+	   </developer>
+	</developers>
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>5.6</version>
+            <classifier>jdk14</classifier>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jmock</groupId>
+            <artifactId>jmock</artifactId>
+            <version>2.4.0</version>
+            <scope>test</scope>
+        </dependency>
+       </dependencies>
+	<distributionManagement>
+		<!-- use the following if you're not using a snapshot version. -->
+		<repository>
+			<id>israfil</id>
+			<name>Israfil Deploy</name>
+			<url>scp://source.israfil.net/var/www/vhosts/www.israfil.net/htdocs/maven2</url>
+		</repository>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>israfil</id>
+			<name>Israfil Snapshot</name>
+			<url>scp://source.israfil.net/var/www/vhosts/www.israfil.net/htdocs/maven2-snapshots</url>
+		</snapshotRepository>
+		<site>
+			<id>website</id>
+			<url>scp://www.israfil.net/var/www/vhosts/www.israfil.net/htdocs/projects/micro</url>
+		</site>
+	</distributionManagement>
+  <scm>
+      <connection>scm:svn:http://israfil-micro.googlecode.com/svn/trunk</connection>
+      <developerConnection>scm:svn:https://israfil-micro.googlecode.com/svn/trunk</developerConnection>
+      <url>http://israfil-micro.googlecode.com/svn/trunk</url>
+  </scm>
+</project>

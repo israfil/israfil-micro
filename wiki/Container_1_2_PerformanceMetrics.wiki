@@ -1,0 +1,116 @@
+# Performance Metrics for Container v1.2 vs. spring, pico-container, and hard-coded access.
+
+=NOT READY YET - ONLY FORMATTED RIGHT - NEED 1.2 DATA=
+
+Here is a quick performance table for different containers, including a "1st invocation" and an average for all following invocations.  They are all run on the same machine (Macbook  Pro 2.4Ghz Dual-Core circa 2006) with identical component loading.  
+
+Note: I'm a big fan of Tapestry5, and I'm very confused as to why t5's ioc container is so slow.  I imagine I'm doing something wrong, but I haven't had a chance to ask HLS why I would find this performance.
+
+Here's the list of containers, with rolled up averages relative to hard-coded.   (Note, results in nanoseconds, with that resolution being attained by iterating the test 10,000,000 times.  For loop cost factored in, sadly)
+
+|| *Container name* || *Version* || *Configuration* || *ns/1st call* || *1st call / hard-coded* || *ns/avg call* || *avg call / hard-coded* ||
+|| Hard Coded || N/A || N/A || 11 || 1.0 || 8 || 1.0 || 
+|| Israfil Micro || 1.0 || early resolution || 113 || 10.3  || 109 || 13.6 || 
+|| Israfil Micro || 1.0 || late resolution || 118 || 10.7 || 112 || 14.0 ||
+|| Pico Container || 2.1 || with cache|| 255 || 23.2  || 256 || 32.0 || 
+|| Spring || 2.5.4 ||N/A || 289 || 26.3 || 292 || 36.5 ||
+|| Pico Container || 2.1 || without cache || 5637  || 512.5 || 5825 || 728.1 ||
+|| T5-IOC || 5.0.11 || N/A || 18914 || 1719.5 || 17637 || 2204.6  ||
+
+Oddly enough, the call time of the first invocation is smaller (relative to hard-coded) than later calls, though you would think it wouldn't be.  I think this is because the first call to the hard-coded version had a slightly higher cost compared to average cost of calling the hard-coded one.  This plays out in the relative numbers, even though the absolute average call time is smaller
+
+The startup costs for each container are as follows, reported in milliseconds by necessity:
+
+|| *container/config* || *ms/startup* ||
+|| singleton  ||  2 || 0 || 11 ||
+|| t5-ioc  ||339 || 18 || 18914 ||
+|| israfil micro early  || 6 || 0 || 110 ||
+|| israfil micro late ||  0 || 0 || 118 ||
+|| pico-nocache || 38 || 5 || 5637 ||
+|| pico-cache || 2 || 0 || 255 ||
+|| spring  || 449 || 0 || 289 ||
+
+The ongoing average call costs are as follows:
+
+|| *container/config* || *ms/startup* || *µs/query* || *ns/query* ||
+|| singleton || 0 || 0 || 8 ||
+|| t5-ioc || 6.8 || 17 || 17637 ||
+|| israfil micro early || 0 || 0 || 98 ||
+|| israfil micro late || 0 || 0 || 102 ||
+|| pico-nocache || 0.3 || 5 || 5825 ||
+|| pico-cache || 0.56 || 0 || 256 ||
+|| spring || 51 || 0 || 292 ||
+
+And here's the raw data from the runs.  
+
+|| container/config || init || staging || total startup || exec (500000 cycles) || µs/query || ns/query ||
+|| singleton 0 || 2 || 0 || 2 || 10 || 0 || 20 ||
+|| singleton 1 || 0 || 0 || 0 || 5 || 0 || 10 ||
+|| singleton 2 || 0 || 0 || 0 || 4 || 0 || 8 ||
+|| singleton 3 || 0 || 0 || 0 || 5 || 0 || 10 ||
+|| singleton 4 || 0 || 0 || 0 || 4 || 0 || 8 ||
+|| singleton 5 || 0 || 0 || 0 || 4 || 0 || 8 ||
+|| singleton 6 || 0 || 0 || 0 || 5 || 0 || 10 ||
+|| singleton 7 || 0 || 0 || 0 || 5 || 0 || 10 ||
+|| singleton 8 || 0 || 0 || 0 || 5 || 0 || 10 ||
+|| singleton 9 || 0 || 0 || 0 || 5 || 0 || 10 ||
+|| t5-ioc 0 || 165 || 128 || 293 || 8375 || 16 || 16750 ||
+|| t5-ioc 1 || 12 || 4 || 16 || 8465 || 16 || 16930 ||
+|| t5-ioc 2 || 1 || 3 || 4 || 8485 || 16 || 16970 ||
+|| t5-ioc 3 || 1 || 4 || 5 || 8528 || 17 || 17056 ||
+|| t5-ioc 4 || 2 || 3 || 5 || 8456 || 16 || 16912 ||
+|| t5-ioc 5 || 1 || 3 || 4 || 8385 || 16 || 16770 ||
+|| t5-ioc 6 || 1 || 3 || 4 || 8384 || 16 || 16768 ||
+|| t5-ioc 7 || 1 || 3 || 4 || 8416 || 16 || 16832 ||
+|| t5-ioc 8 || 1 || 4 || 5 || 8505 || 17 || 17010 ||
+|| t5-ioc 9 || 1 || 4 || 5 || 8486 || 16 || 16972 ||
+|| israfil micro early 0 || 4 || 2 || 6 || 61 || 0 || 122 ||
+|| israfil micro early 1 || 0 || 0 || 0 || 56 || 0 || 112 ||
+|| israfil micro early 2 || 0 || 0 || 0 || 55 || 0 || 110 ||
+|| israfil micro early 3 || 0 || 0 || 0 || 56 || 0 || 112 ||
+|| israfil micro early 4 || 0 || 0 || 0 || 55 || 0 || 110 ||
+|| israfil micro early 5 || 0 || 0 || 0 || 57 || 0 || 114 ||
+|| israfil micro early 6 || 0 || 0 || 0 || 60 || 0 || 120 ||
+|| israfil micro early 7 || 0 || 0 || 0 || 62 || 0 || 124 ||
+|| israfil micro early 8 || 0 || 0 || 0 || 55 || 0 || 110 ||
+|| israfil micro early 9 || 0 || 0 || 0 || 57 || 0 || 114 ||
+|| israfil micro late 0 || 0 || 0 || 0 || 61 || 0 || 122 ||
+|| israfil micro late 1 || 0 || 0 || 0 || 58 || 0 || 116 ||
+|| israfil micro late 2 || 0 || 0 || 0 || 58 || 0 || 116 ||
+|| israfil micro late 3 || 0 || 0 || 0 || 56 || 0 || 112 ||
+|| israfil micro late 4 || 0 || 0 || 0 || 57 || 0 || 114 ||
+|| israfil micro late 5 || 1 || 0 || 1 || 56 || 0 || 112 ||
+|| israfil micro late 6 || 0 || 0 || 0 || 55 || 0 || 110 ||
+|| israfil micro late 7 || 0 || 0 || 0 || 57 || 0 || 114 ||
+|| israfil micro late 8 || 0 || 0 || 0 || 56 || 0 || 112 ||
+|| israfil micro late 9 || 0 || 0 || 0 || 58 || 0 || 116 ||
+|| pico-nocache try 0 || 37 || 1 || 38 || 2748 || 5 || 5496 ||
+|| pico-nocache try 1 || 1 || 0 || 1 || 2751 || 5 || 5502 ||
+|| pico-nocache try 2 || 1 || 0 || 1 || 2736 || 5 || 5472 ||
+|| pico-nocache try 3 || 0 || 0 || 0 || 2759 || 5 || 5518 ||
+|| pico-nocache try 4 || 0 || 0 || 0 || 2751 || 5 || 5502 ||
+|| pico-nocache try 5 || 0 || 0 || 0 || 2741 || 5 || 5482 ||
+|| pico-nocache try 6 || 0 || 1 || 1 || 2755 || 5 || 5510 ||
+|| pico-nocache try 7 || 1 || 0 || 1 || 2746 || 5 || 5492 ||
+|| pico-nocache try 8 || 0 || 0 || 0 || 2756 || 5 || 5512 ||
+|| pico-nocache try 9 || 1 || 0 || 1 || 2752 || 5 || 5504 ||
+|| spring 0 || 333 || 0 || 333 || 154 || 0 || 308 ||
+|| spring 1 || 50 || 0 || 50 || 142 || 0 || 284 ||
+|| spring 2 || 27 || 0 || 27 || 136 || 0 || 272 ||
+|| spring 3 || 38 || 0 || 38 || 147 || 0 || 294 ||
+|| spring 4 || 34 || 0 || 34 || 145 || 0 || 290 ||
+|| spring 5 || 25 || 0 || 25 || 137 || 0 || 274 ||
+|| spring 6 || 22 || 0 || 22 || 138 || 0 || 276 ||
+|| spring 7 || 19 || 0 || 19 || 142 || 0 || 284 ||
+|| spring 8 || 25 || 0 || 25 || 137 || 0 || 274 ||
+|| spring 9 || 22 || 0 || 22 || 138 || 0 || 276 ||
+|| pico-cache 0 || 2 || 0 || 2 || 127 || 0 || 254 ||
+|| pico-cache 1 || 0 || 0 || 0 || 121 || 0 || 242 ||
+|| pico-cache 2 || 0 || 0 || 0 || 119 || 0 || 238 ||
+|| pico-cache 3 || 0 || 0 || 0 || 117 || 0 || 234 ||
+|| pico-cache 4 || 1 || 0 || 1 || 131 || 0 || 262 ||
+|| pico-cache 5 || 0 || 0 || 0 || 119 || 0 || 238 ||
+|| pico-cache 6 || 1 || 0 || 1 || 119 || 0 || 238 ||
+|| pico-cache 7 || 0 || 0 || 0 || 119 || 0 || 238 ||
+|| pico-cache 8 || 0 || 0 || 0 || 119 || 0 || 238 ||
+|| pico-cache 9 || 1 || 0 || 1 || 120 || 0 || 240 ||
