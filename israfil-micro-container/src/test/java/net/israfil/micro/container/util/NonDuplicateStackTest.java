@@ -33,14 +33,15 @@
  */
 package net.israfil.micro.container.util;
 
-import java.util.Stack;
+import static com.google.common.truth.Truth.assertThat;
 
-import org.testng.Assert;
+import java.util.Stack;
+import org.junit.Test;
 
 
 public class NonDuplicateStackTest {
 	
-	/** @testng.test */
+	@Test
 	public void testBasicStackBehaviour() {
 		String s1 = "Hi.";
 		String s2 = "Hi";
@@ -49,14 +50,12 @@ public class NonDuplicateStackTest {
 		stack.push(s1);
 		stack.push(s2);
 		stack.push(s3);
-		Assert.assertSame(stack.pop(),s3);
-		Assert.assertSame(stack.pop(),s2);
-		Assert.assertSame(stack.pop(),s1);
+		assertThat(stack.pop()).isSameInstanceAs(s3);
+		assertThat(stack.pop()).isSameInstanceAs(s2);
+		assertThat(stack.pop()).isSameInstanceAs(s1);
 	}
 	
-	/** @testng.test 
-	    @testng.expected-exceptions
-    	value = "java.lang.IllegalArgumentException" */
+	@Test(expected = IllegalArgumentException.class)
 	public void testDuplicateHandlingByObjectRef() {
 		Object o1 = new Object();
 		Object o2 = new Object();
@@ -68,9 +67,7 @@ public class NonDuplicateStackTest {
 		stack.push(o2);
 	}
 		
-	/** @testng.test 
-	    @testng.expected-exceptions
-		value = "java.lang.IllegalArgumentException" */
+	@Test(expected = IllegalArgumentException.class)
 	public void testDuplicateHandlingByValue() {
 		String s1 = "Hi.";
 		String s2 = "Hi";

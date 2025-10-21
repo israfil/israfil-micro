@@ -33,22 +33,21 @@
  */
 package net.israfil.micro.util;
 
-import java.io.PrintStream;
+import static com.google.common.truth.Truth.assertThat;
 
-import org.testng.Assert;
+import java.io.PrintStream;
+import org.junit.Test;
 
 
 public class StringBufferOutputStreamTest {
 	
-	/**
-	 * @testng.test
-	 */
+	@Test
 	public void testStringBufferOutputStream() {
 		StringBufferOutputStream sbos = new StringBufferOutputStream();
 		PrintStream ps = new PrintStream(sbos);
 		ps.print("Hello");
 		ps.println(" World");
-		Assert.assertEquals(sbos.getBuffer().toString(), "Hello World\n");
+		assertThat(sbos.getBuffer().toString()).isEqualTo("Hello World\n");
 	}
 
 }

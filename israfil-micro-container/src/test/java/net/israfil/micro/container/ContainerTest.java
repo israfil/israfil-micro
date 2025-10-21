@@ -33,15 +33,20 @@
  */
 package net.israfil.micro.container;
 
-import org.testng.Assert;
+import static com.google.common.truth.Truth.assertThat;
+
+import net.israfil.micro.container.error.ComponentAlreadyRegisteredError;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ContainerTest {
-	
+
 	AbstractContainer container = null;
 	AbstractContainer child = null;
-	
 
-	/** @testng.before-method alwaysRun = "true" */
+
+	@Before
 	public void setUp() {
 		container = new AbstractContainer() {
 			public void start() { }
@@ -53,32 +58,30 @@ public class ContainerTest {
 		};
 	}
 
-	/** @testng.after-method alwaysRun = "true" */
+	@After
 	public void tearDown() {
 		child = null;
 		container = null;
 	}
 
-	/** @testng.test */
+	@Test
 	public void testContainerWithSingleComponent() {
 		FakeComponent component = new FakeComponent1();
 		container.store(FakeComponent.class, component);
-		Assert.assertSame(container.getComponent(FakeComponent.class), component);
+		assertThat(container.getComponent(FakeComponent.class)).isSameInstanceAs(component);
 	}
-	
-	/** @testng.test */
+
+	@Test
 	public void testContainerWithMultipleComponents() {
 		FakeComponent component = new FakeComponent1();
 		FakeDependentComponent component2 = new FakeDependentComponent(component);
 		container.store(FakeComponent.class, component);
 		container.store(FakeDependentComponent.class, component2);
-		Assert.assertSame(container.getComponent(FakeComponent.class), component);
-		Assert.assertSame(container.getComponent(FakeDependentComponent.class), component2);
+		assertThat(container.getComponent(FakeComponent.class)).isSameInstanceAs(component);
+		assertThat(container.getComponent(FakeDependentComponent.class)).isSameInstanceAs(component2);
 	}
-	
-	/** @testng.test
-	    @testng.expected-exceptions
-        value = "net.israfil.micro.container.error.ComponentAlreadyRegisteredError" */
+
+	@Test(expected = ComponentAlreadyRegisteredError.class)
 	public void testContainerWithDuplicateComponents() {
 		FakeComponent component1 = new FakeComponent1();
 		FakeComponent component2 = new FakeComponent2();
@@ -86,24 +89,22 @@ public class ContainerTest {
 		container.store(FakeComponent.class,component2);
 	}
 
-	/** @testng.test */
+	@Test
 	public void testContainerWithRepeatedRegistrationsOfTheSameComponent() {
 		FakeComponent component1 = new FakeComponent1();
 		container.store(FakeComponent.class,component1);
 		container.store(FakeComponent.class,component1);
 	}
 
-	/** @testng.test */
+	@Test
 	public void testContainerWithParent() {
 		FakeComponent component1 = new FakeComponent1();
 		container.store(FakeComponent.class,component1);
-		Assert.assertTrue(child.hasComponent(FakeComponent.class));
-		Assert.assertSame(child.getComponent(FakeComponent.class), component1);
+		assertThat(child.hasComponent(FakeComponent.class)).isTrue();
+		assertThat(child.getComponent(FakeComponent.class)).isSameInstanceAs(component1);
 	}
 
-	/** @testng.test
-	    @testng.expected-exceptions
-	    value = "net.israfil.micro.container.error.ComponentAlreadyRegisteredError" */
+	@Test(expected = ComponentAlreadyRegisteredError.class)
 	public void testDuplicateRegistrationWithFirstObjectInParent() {
 		FakeComponent component1 = new FakeComponent1();
 		FakeComponent component2 = new FakeComponent2();
@@ -111,7 +112,7 @@ public class ContainerTest {
 		child.store(FakeComponent.class,component2);
 	}
 
-	/** @testng.test */
+	@Test
 	public void testDuplicateComponentsInPeerContainers() {
 		AbstractContainer child2 = new AbstractContainer(container) {
 			public void start() { }
@@ -121,13 +122,13 @@ public class ContainerTest {
 		FakeComponent component2 = new FakeComponent2();
 		child.store(FakeComponent.class,component1);
 		child2.store(FakeComponent.class,component2);
-		Assert.assertTrue(child.hasComponent(FakeComponent.class));
-		Assert.assertSame(child.getComponent(FakeComponent.class), component1);
-		Assert.assertNotSame(child2.getComponent(FakeComponent.class), component1);
-		Assert.assertTrue(child2.hasComponent(FakeComponent.class));
-		Assert.assertSame(child2.getComponent(FakeComponent.class), component2);
-		Assert.assertNotSame(child2.getComponent(FakeComponent.class), component1);
-		Assert.assertFalse(container.hasComponent(FakeComponent.class));
+		assertThat(child.hasComponent(FakeComponent.class)).isTrue();
+		assertThat(child.getComponent(FakeComponent.class)).isSameInstanceAs(component1);
+		assertThat(child2.getComponent(FakeComponent.class)).isNotSameInstanceAs(component1);
+		assertThat(child2.hasComponent(FakeComponent.class)).isTrue();
+		assertThat(child2.getComponent(FakeComponent.class)).isSameInstanceAs(component2);
+		assertThat(child2.getComponent(FakeComponent.class)).isNotSameInstanceAs(component1);
+		assertThat(container.hasComponent(FakeComponent.class)).isFalse();
 	}
 
 	public abstract class FakeComponent {

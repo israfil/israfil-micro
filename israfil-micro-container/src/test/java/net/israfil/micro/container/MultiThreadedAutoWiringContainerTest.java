@@ -33,20 +33,21 @@
  */
 package net.israfil.micro.container;
 
-import net.israfil.micro.container.adapters.AbstractAutoWiringAdapter;
+import static com.google.common.truth.Truth.assertThat;
 
-import org.testng.Assert;
+import net.israfil.micro.container.adapters.AbstractAutoWiringAdapter;
+import org.junit.Test;
 
 
 public class MultiThreadedAutoWiringContainerTest {
 	
-	/** @testng.test */
+	@Test
 	public void testMissingDependenciesWiringEarly() {
 		AutoWiringAdaptableContainer container = new DefaultContainer(true);
 		container.registerType(A.class,A1.class);
 		container.registerType(B.class,B.adapter);
 		container.start();
-		Assert.assertNotNull(container.getComponent(B.class));
+		assertThat(container.getComponent(B.class)).isNotNull();
 	}
 
 	public static abstract class A {

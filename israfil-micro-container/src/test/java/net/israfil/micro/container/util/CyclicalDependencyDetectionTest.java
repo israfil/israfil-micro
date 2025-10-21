@@ -39,11 +39,13 @@ import java.util.Hashtable;
 import net.israfil.micro.container.AutoWiringAdapter;
 import net.israfil.micro.container.adapters.AbstractAutoWiringAdapter;
 import net.israfil.micro.container.adapters.IndependentAutoWiringAdapter;
+import net.israfil.micro.container.error.CyclicalDependencyError;
+import org.junit.Test;
 
 
 public class CyclicalDependencyDetectionTest {
 	
-	/** @testng.test */
+	@Test
 	public void testCircularDependencyCheckWithNonCyclicGraph() {
 		// setup non-circular graph.
 		Hashtable registry = new Hashtable();
@@ -63,14 +65,12 @@ public class CyclicalDependencyDetectionTest {
 		}
 	}
 	
-	/** @testng.test */
+	@Test
 	public void testToSatisfyCoberturasSillyRule() {
 		CyclicalReferenceDetectionUtil util = new CyclicalReferenceDetectionUtil(){};
 	}
 	
-	/** @testng.test 
-	    @testng.expected-exceptions
-    	value = "net.israfil.micro.container.error.CyclicalDependencyError" */
+	@Test(expected = CyclicalDependencyError.class)
 	public void testCircularDependencyCheckWithCyclicalGraph() {
 		// setup circular graph.
 		Hashtable registry = new Hashtable();

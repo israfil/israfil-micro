@@ -34,33 +34,24 @@
 package net.israfil.micro.container.error;
 
 import net.israfil.micro.util.CausedRuntimeException;
-
+import org.junit.Test;
 
 
 public class CouldNotCreateComponentTest {
 	
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.CouldNotCreateComponentError"
-	 */
+	@Test(expected = CouldNotCreateComponentError.class)
 	public void testSimpleErrorThrow() throws Throwable {
 		Throwable error = new CouldNotCreateComponentError();
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.CouldNotCreateComponentError"
-	 */
+	@Test(expected = CouldNotCreateComponentError.class)
 	public void testSimpleErrorThrowWithString() throws Throwable {
 		Throwable error = new CouldNotCreateComponentError("test");
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.CouldNotCreateComponentError"
-	 */
+	@Test(expected = CouldNotCreateComponentError.class)
 	public void testSimpleErrorThrowWithThrowable() {
 		CausedRuntimeException error = new CouldNotCreateComponentError(
 			new RuntimeException("test2")
@@ -68,10 +59,7 @@ public class CouldNotCreateComponentTest {
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.CouldNotCreateComponentError"
-	 */
+	@Test(expected = CouldNotCreateComponentError.class)
 	public void testSimpleErrorThrowWithStringAndThrowable() {
 		CausedRuntimeException error = new CouldNotCreateComponentError(
 			"test", 

@@ -33,9 +33,10 @@
  */
 package net.israfil.micro.util;
 
-import java.io.PrintStream;
+import static com.google.common.truth.Truth.assertThat;
 
-import org.testng.Assert;
+import java.io.PrintStream;
+import org.junit.Test;
 
 
 public class CausedRuntimeExceptionTest {
@@ -44,28 +45,19 @@ public class CausedRuntimeExceptionTest {
 	private static final String TEST_MESSAGE2 = "Test Message2";
 	private static final String TEST_MESSAGE3 = "Test Message3";
 	
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.util.CausedRuntimeException"
-	 */
+	@Test(expected = CausedRuntimeException.class)
 	public void testSimpleErrorThrow() {
 		CausedRuntimeException error = new CausedRuntimeException();
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.util.CausedRuntimeException"
-	 */
+	@Test(expected = CausedRuntimeException.class)
 	public void testSimpleErrorThrowWithString() {
 		CausedRuntimeException error = new CausedRuntimeException(TEST_MESSAGE1);
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.util.CausedRuntimeException"
-	 */
+	@Test(expected = CausedRuntimeException.class)
 	public void testSimpleErrorThrowWithThrowable() {
 		CausedRuntimeException error = new CausedRuntimeException(
 			new RuntimeException(TEST_MESSAGE2)
@@ -73,10 +65,7 @@ public class CausedRuntimeExceptionTest {
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.util.CausedRuntimeException"
-	 */
+	@Test(expected = CausedRuntimeException.class)
 	public void testSimpleErrorThrowWithStringAndThrowable() {
 		CausedRuntimeException error = new CausedRuntimeException(
 			TEST_MESSAGE1, 
@@ -85,29 +74,29 @@ public class CausedRuntimeExceptionTest {
 		throw error;
 	}	
 
-	/** @testng.test  */
+	@Test
 	public void testErrorPrintStream() {
 		Throwable t = new RuntimeException(TEST_MESSAGE2);
 		CausedRuntimeException error = new CausedRuntimeException(TEST_MESSAGE1, t);
 		StringBufferOutputStream out = new StringBufferOutputStream();
 		error.printStackTrace(new PrintStream(out));
-		Assert.assertTrue(out.getBuffer().toString().startsWith(error.getClass().getName() + ": " + TEST_MESSAGE1));
-		Assert.assertTrue(out.getBuffer().toString().contains("Caused by: " + t.getClass().getName() + ": " + TEST_MESSAGE2));
+		assertThat(out.getBuffer().toString()).startsWith(error.getClass().getName() + ": " + TEST_MESSAGE1);
+		assertThat(out.getBuffer().toString()).contains("Caused by: " + t.getClass().getName() + ": " + TEST_MESSAGE2);
 	}	
 	
-	/** @testng.test  */
+	@Test
 	public void testDeepErrorPrintStream() {
 		Throwable root = new CausedRuntimeException(TEST_MESSAGE1);
 		CausedRuntimeException intermediate = new CausedRuntimeException(TEST_MESSAGE2, root);
 		CausedRuntimeException error = new CausedRuntimeException(TEST_MESSAGE3, intermediate);
 		StringBufferOutputStream out = new StringBufferOutputStream();
 		error.printStackTrace(new PrintStream(out));
-		Assert.assertTrue(out.getBuffer().toString().startsWith(error.getClass().getName() + ": " + TEST_MESSAGE3));
-		Assert.assertTrue(out.getBuffer().toString().contains("Caused by: " + intermediate.getClass().getName() + ": " + TEST_MESSAGE2));
-		Assert.assertTrue(out.getBuffer().toString().contains("Caused by: " + root.getClass().getName() + ": " + TEST_MESSAGE1));
+		assertThat(out.getBuffer().toString()).startsWith(error.getClass().getName() + ": " + TEST_MESSAGE3);
+		assertThat(out.getBuffer().toString()).contains("Caused by: " + intermediate.getClass().getName() + ": " + TEST_MESSAGE2);
+		assertThat(out.getBuffer().toString()).contains("Caused by: " + root.getClass().getName() + ": " + TEST_MESSAGE1);
 		/* index a greater than index b, so root is deeper than intermediate*/
 		int indexa = out.getBuffer().toString().indexOf("Caused by: " + root.getClass().getName() + ": " + TEST_MESSAGE1);
 		int indexb = out.getBuffer().toString().indexOf("Caused by: " + intermediate.getClass().getName() + ": " + TEST_MESSAGE2);		
-		Assert.assertTrue(indexa > indexb);
+		assertThat(indexa).isGreaterThan(indexb);
 	}	
 }

@@ -26,16 +26,15 @@
  * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ * ARISING IN ANY WAY OUT of THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
  * OF SUCH DAMAGE.
  * 
  * $Id: Copyright.java 618 2008-04-14 14:03:03Z christianedwardgruber $
  */
 package net.israfil.micro.container.adapters;
 
-import java.util.Hashtable;
-
 import net.israfil.micro.container.AutoWiringAdapter;
+import org.junit.Test;
 
 /**
  * Tests 
@@ -44,33 +43,29 @@ import net.israfil.micro.container.AutoWiringAdapter;
  */
 public class AdaptersTest {
 
-	/** @testng.test 
-	    @testng.expected-exceptions
-		value = "java.lang.IllegalArgumentException" */
+	@Test(expected = IllegalArgumentException.class)
 	public void testIndependentAutoWiringAdapterWithNullType() {
 		new IndependentAutoWiringAdapter(null);
 	}
 	
-	/** @testng.test */
+	@Test
 	public void testIndependentAutoWiringAdapterWithEmptyParamters() throws Exception {
 		AutoWiringAdapter awa = new IndependentAutoWiringAdapter(Fake.class);
-		Fake fake = (Fake)awa.create(new Object[0]);
+		awa.create(new Object[0]);
 	}
 
-	/** @testng.test */
+	@Test
 	public void testIndependentAutoWiringAdapterWithNullParamters() throws Exception {
 		AutoWiringAdapter awa = new IndependentAutoWiringAdapter(Fake.class);
-		Fake fake = (Fake)awa.create(null);
+		awa.create(null);
 	}
 
-	/** @testng.test 
-		@testng.expected-exceptions
-		value = "java.lang.IllegalArgumentException" */
+	@Test(expected = IllegalArgumentException.class)
 	public void testIndependentAutoWiringAdapterWithNonEmptyParamters() throws Exception {
 		AutoWiringAdapter awa = new IndependentAutoWiringAdapter(Fake.class);
 		Object[] parameters = new Object[1];
 		parameters[0] = "A";
-		Fake fake = (Fake)awa.create(parameters);
+		awa.create(parameters);
 	}
 
 	public static class Fake {

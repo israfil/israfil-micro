@@ -33,23 +33,17 @@
  */
 package net.israfil.micro.container.error;
 
-
+import org.junit.Test;
 
 public class UnsatisfiedDependencyErrorTest {
 	
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.UnsatisfiedDependencyError"
-	 */
+	@Test(expected = UnsatisfiedDependencyError.class)
 	public void testSimpleErrorThrow() throws Throwable {
 		Throwable error = new UnsatisfiedDependencyError();
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.UnsatisfiedDependencyError"
-	 */
+	@Test(expected = UnsatisfiedDependencyError.class)
 	public void testSimpleErrorThrowWithString() throws Throwable {
 		Throwable error = new UnsatisfiedDependencyError("test");
 		throw error;

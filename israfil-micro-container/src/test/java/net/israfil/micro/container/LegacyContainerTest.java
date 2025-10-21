@@ -34,19 +34,37 @@
 package net.israfil.micro.container;
 
 
+public class LegacyContainerTest extends AbstractContainerTest<DefaultAutoWiringAdaptableContainer> {
 
-public class LegacyContainerTest extends DefaultContainerTest {
-	
-	public DefaultContainer createContainer() { return new DefaultAutoWiringAdaptableContainer(); }
-	public DefaultContainer createContainer(boolean tf) { return new DefaultAutoWiringAdaptableContainer(tf); }
-	public DefaultContainer createContainer(Container c) { return new DefaultAutoWiringAdaptableContainer(c); }
-	public DefaultContainer createContainer(Container c, boolean tf) { return new DefaultAutoWiringAdaptableContainer(c,tf); }
-	public TestableContainer createTestableContainer() { return new TestableLegacyContainer(); }
+    @Override
+    protected DefaultAutoWiringAdaptableContainer createContainer() {
+        return new DefaultAutoWiringAdaptableContainer();
+    }
 
-	public static class TestableLegacyContainer extends DefaultAutoWiringAdaptableContainer implements TestableContainer {
-		public boolean isStored(Object key) {
-			return super.isStored(key);
-		}
-	}
+    @Override
+    protected DefaultAutoWiringAdaptableContainer createContainer(boolean tf) {
+        return new DefaultAutoWiringAdaptableContainer(tf);
+    }
+
+    @Override
+    protected DefaultAutoWiringAdaptableContainer createContainer(Container c) {
+        return new DefaultAutoWiringAdaptableContainer(c);
+    }
+
+    @Override
+    protected DefaultAutoWiringAdaptableContainer createContainer(Container c, boolean tf) {
+        return new DefaultAutoWiringAdaptableContainer(c, tf);
+    }
+
+    @Override
+    protected TestableContainer createTestableContainer() {
+        return new TestableLegacyContainer();
+    }
+
+    public static class TestableLegacyContainer extends DefaultAutoWiringAdaptableContainer implements TestableContainer {
+        public boolean isStored(Object key) {
+            return super.isStored(key);
+        }
+    }
 
 }

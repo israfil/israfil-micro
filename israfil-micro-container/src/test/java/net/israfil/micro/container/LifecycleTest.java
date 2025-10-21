@@ -33,36 +33,37 @@
  */
 package net.israfil.micro.container;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import net.israfil.micro.container.adapters.AbstractAutoWiringAdapter;
 import net.israfil.micro.container.adapters.IndependentAutoWiringAdapter;
-
-import org.testng.Assert;
+import org.junit.Test;
 
 
 public class LifecycleTest {
 
-	/** @testng.test */
+	@Test
 	public void testAbstractStartable() {
 		Startable s = new AbstractStartable() {};
-		Assert.assertFalse(s.isRunning());
+		assertThat(s.isRunning()).isFalse();
 		s.start();
-		Assert.assertTrue(s.isRunning());
+		assertThat(s.isRunning()).isTrue();
 	}
 
-	/** @testng.test */
+	@Test
 	public void testStartupOfSingleComponent() {
 		AutoWiringAdaptableContainer container = new DefaultContainer();
 		final A1 a1 = new A1();
 		container.registerType(A.class, new IndependentAutoWiringAdapter(A1.class) {
 			public Object create(Object[] args) { return a1; } 
 		}); 
-		Assert.assertFalse(a1.isRunning());
+		assertThat(a1.isRunning()).isFalse();
 		container.start();
 		container.getComponent(A.class);
-		Assert.assertTrue(a1.isRunning());
+		assertThat(a1.isRunning()).isTrue();
 	}	
 	
-	/** @testng.test */
+	@Test
 	public void testStartupOfStartedComponent() {
 		AutoWiringAdaptableContainer container = new DefaultContainer();
 		final A2 a2 = new A2();
@@ -72,10 +73,10 @@ public class LifecycleTest {
 		}); 
 		container.start();
 		container.getComponent(A.class);
-		Assert.assertEquals(a2.invoked,1);
+		assertThat(a2.invoked).isEqualTo(1);
 	}
 
-	/** @testng.test */
+	@Test
 	public void testStartupOfMultipleComponents() {
 		AutoWiringAdaptableContainer container = new DefaultContainer();
 		final A1 a1 = new A1();
@@ -92,15 +93,15 @@ public class LifecycleTest {
 				return c;
 			}
 		});
-		Assert.assertFalse(a1.isRunning());
-		Assert.assertFalse(c.isRunning());
+		assertThat(a1.isRunning()).isFalse();
+		assertThat(c.isRunning()).isFalse();
 		container.start();
 		container.getComponent(A.class);
-		Assert.assertFalse(c.isRunning());
-		Assert.assertTrue(a1.isRunning());		
+		assertThat(c.isRunning()).isFalse();
+		assertThat(a1.isRunning()).isTrue();		
 		container.getComponent(C.class);
-		Assert.assertTrue(c.isRunning());
-		Assert.assertTrue(a1.isRunning());
+		assertThat(c.isRunning()).isTrue();
+		assertThat(a1.isRunning()).isTrue();
 	}
 
 	public static interface A {

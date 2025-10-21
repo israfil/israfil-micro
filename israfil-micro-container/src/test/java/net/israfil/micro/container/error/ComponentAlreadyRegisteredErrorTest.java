@@ -33,23 +33,17 @@
  */
 package net.israfil.micro.container.error;
 
-
+import org.junit.Test;
 
 public class ComponentAlreadyRegisteredErrorTest {
 	
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.ComponentAlreadyRegisteredError"
-	 */
+	@Test(expected = ComponentAlreadyRegisteredError.class)
 	public void testSimpleErrorThrow() throws Throwable {
 		Throwable error = new ComponentAlreadyRegisteredError();
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.ComponentAlreadyRegisteredError"
-	 */
+	@Test(expected = ComponentAlreadyRegisteredError.class)
 	public void testSimpleErrorThrowWithString() throws Throwable {
 		Throwable error = new ComponentAlreadyRegisteredError("test");
 		throw error;

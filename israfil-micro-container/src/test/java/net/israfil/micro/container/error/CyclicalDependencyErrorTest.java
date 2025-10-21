@@ -33,23 +33,17 @@
  */
 package net.israfil.micro.container.error;
 
-
+import org.junit.Test;
 
 public class CyclicalDependencyErrorTest {
 	
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.CyclicalDependencyError"
-	 */
+	@Test(expected = CyclicalDependencyError.class)
 	public void testSimpleErrorThrow() throws Throwable {
 		Throwable error = new CyclicalDependencyError();
 		throw error;
 	}
 
-	/**
-	 * @testng.test
-	 * @testng.expected-exceptions value = "net.israfil.micro.container.error.CyclicalDependencyError"
-	 */
+	@Test(expected = CyclicalDependencyError.class)
 	public void testSimpleErrorThrowWithString() throws Throwable {
 		Throwable error = new CyclicalDependencyError("test");
 		throw error;
