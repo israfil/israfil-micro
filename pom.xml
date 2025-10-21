@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.israfil.micro</groupId>
 	<artifactId>israfil-micro</artifactId>
-	<version>3-SNAPSHOT</version>
+	<version>4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Israfil Micro: Parent</name>
 	<description>J2ME Frameworks from Israfil Consulting Services</description>
@@ -136,4 +136,12 @@
       <developerConnection>scm:svn:https://israfil-micro.googlecode.com/svn/trunk</developerConnection>
       <url>http://israfil-micro.googlecode.com/svn/trunk</url>
   </scm>
+  <repositories>
+    <repository>
+      <id>ops4j-repo</id>
+      <url>http://repository.ops4j.org/maven2</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+  </repositories>
 </project>

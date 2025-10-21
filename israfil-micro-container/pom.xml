@@ -3,7 +3,8 @@
 	<parent>
 		<groupId>net.israfil.micro</groupId>
 		<artifactId>israfil-micro</artifactId>
-		<version>2</version>
+		<version>4-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>israfil-micro-container</artifactId>
 	<name>Israfil CLDC 1.1 compliant IoC container</name>
@@ -29,12 +30,12 @@
 		</plugins>
 	</build>
     <dependencies>
-       <dependency>
-           <groupId>javax.microedition</groupId>
-           <artifactId>cldc</artifactId>
-           <version>1.1</version>
-           <scope>provided</scope>
-       </dependency>
+        <dependency>
+            <groupId>org.microemu</groupId>
+            <artifactId>cldcapi11</artifactId>
+            <version>2.0.4</version>
+            <scope>provided</scope>
+        </dependency>
        <dependency>
            <groupId>${project.groupId}</groupId>
            <artifactId>israfil-micro-util</artifactId>
